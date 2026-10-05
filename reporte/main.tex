@@ -1,0 +1,82 @@
+\documentclass[11pt,a4paper]{article}
+
+% Paquetes esenciales
+\usepackage[utf8]{inputenc}
+\usepackage[spanish,es-tabla]{babel}
+\usepackage{amsmath}
+\usepackage{graphicx}
+\usepackage{booktabs}
+\usepackage{geometry}
+\usepackage{hyperref}
+\usepackage{float}
+
+% Configuración de márgenes
+\geometry{left=2.5cm, right=2.5cm, top=2.5cm, bottom=2.5cm}
+
+% Título y autor
+\title{\vspace{-2cm}\textbf{Evaluación 1: Nota Técnica \\ Análisis de Deflexión en Viga Simplemente Apoyada}}
+\author{Almendra Olivares \\ Ingeniería Civil, Universidad de Santiago de Chile (USACH)}
+\date{Octubre 2026}
+
+\begin{document}
+
+\maketitle
+
+\section{Problema y Objetivo}
+El presente documento expone el análisis del comportamiento a flexión de una viga simplemente apoyada sometida a una carga puntual centrada. El objetivo principal es construir un flujo de análisis reproducible para comparar un conjunto de datos sintéticos de deflexión medida frente a la predicción teórica entregada por el modelo lineal elástico de Euler-Bernoulli, evaluando la magnitud de las diferencias relativas y la validez del modelo.
+
+\section{Datos y Supuestos}
+El sistema estructural consiste en una viga de sección rectangular. Los parámetros geométricos y mecánicos proporcionados para el caso de estudio son:
+\begin{itemize}
+    \item Luz entre apoyos ($L$): 4.0 m
+    \item Ancho de la sección ($b$): 0.2 m
+    \item Altura de la sección ($h$): 0.4 m
+    \item Módulo de elasticidad ($E$): 25 GPa ($25 \times 10^6 \text{ kN/m}^2$)
+\end{itemize}
+
+El análisis asume que el material se comporta de manera lineal y elástica, que las deformaciones son pequeñas en comparación con las dimensiones de la viga, y que la sección transversal permanece plana tras la deformación.
+
+\section{Método}
+Para obtener la deflexión teórica en el centro de la luz, primero se determinó el segundo momento de área ($I$) de la sección transversal rectangular mediante la expresión:
+\begin{equation}
+    I = \frac{b \cdot h^3}{12}
+\end{equation}
+Lo que resulta en un valor de $I = 0.0010667 \text{ m}^4$. 
+
+Posteriormente, se calculó la deflexión máxima teórica ($\delta_{teo}$) utilizando la ecuación fundamental para vigas simplemente apoyadas con carga puntual al centro \cite{hibbeler2017}:
+\begin{equation}
+    \delta_{teo} = \frac{P \cdot L^3}{48 \cdot E \cdot I}
+\end{equation}
+Para asegurar la coherencia, la carga $P$ se ingresó en kN y el módulo $E$ en $\text{kN/m}^2$, obteniendo un resultado inicial en metros que fue posteriormente convertido a milímetros. Finalmente, se calculó la diferencia relativa porcentual entre la deflexión medida ($\delta_{med}$) y la teórica mediante $| \delta_{med} - \delta_{teo} | / \delta_{teo} \times 100$.
+
+\section{Resultados y Verificación}
+En la Figura \ref{fig:curva} se presentan los resultados comparativos entre las deflexiones medidas y las calculadas teóricamente para los distintos niveles de carga.
+
+\begin{figure}[H]
+    \centering
+    % Asegúrate de que la ruta de la imagen coincida con la de tu proyecto en Overleaf
+    \includegraphics[width=0.75\textwidth]{figuras/carga_deflexion.png}
+    \caption{Curva de Carga vs Deflexión en el centro de la luz.}
+    \label{fig:curva}
+\end{figure}
+
+Las diferencias relativas calculadas se mantienen bajas en todo el rango de cargas. El error máximo registrado fue del 4.0\% (para $P = 5\text{ kN}$), mientras que para cargas mayores la diferencia fluctúa en torno al 1\% y 2.6\%.
+
+\subsection*{Verificación Adicional: Análisis Dimensional}
+Como mecanismo de control cruzado, se realizó una verificación dimensional de la ecuación de deflexión para comprobar la consistencia de las unidades empleadas en la planilla de cálculo:
+\begin{equation}
+    [\delta] = \frac{[P] \cdot [L]^3}{[E] \cdot [I]} = \frac{\text{kN} \cdot \text{m}^3}{\left(\frac{\text{kN}}{\text{m}^2}\right) \cdot \text{m}^4} = \frac{\text{kN} \cdot \text{m}^3}{\text{kN} \cdot \text{m}^2} = \text{m}
+\end{equation}
+Esta comprobación confirma que antes de aplicar el factor de amplificación de 1000, el resultado del cociente es estrictamente en metros, validando la lógica implementada.
+
+\section{Interpretación y Conclusiones}
+Los resultados demuestran que el modelo de Euler-Bernoulli proporciona una excelente predicción del comportamiento de la viga analizada, dado que las mediciones divergen como máximo un 4\% de los valores teóricos. Esta pequeña diferencia puede atribuirse a limitaciones intrínsecas del modelo teórico, el cual no contabiliza las deformaciones por corte (consideradas en la teoría de Timoshenko), así como a la naturaleza sintética de los datos experimentales que introducen pequeñas desviaciones realistas. En conclusión, para el rango de cargas evaluado y dadas las dimensiones esbeltas de la viga ($L/h = 10$), la teoría clásica de flexión es una herramienta adecuada y precisa.
+
+\section{Declaración de uso de IA}
+La redacción final, verificación de cálculos, análisis dimensional y generación de rutinas computacionales gráficas contaron con el apoyo de herramientas de Inteligencia Artificial Generativa. El detalle específico de la herramienta, propósito, procedimiento de revisión y asunción de responsabilidad se encuentra debidamente documentado en el archivo \texttt{USO\_IA.md} adjunto en el repositorio del proyecto.
+
+% Referencias bibliográficas
+\bibliographystyle{plain}
+\bibliography{referencias} % Asegúrate de tener tu archivo referencias.bib en Overleaf
+
+\end{document}
