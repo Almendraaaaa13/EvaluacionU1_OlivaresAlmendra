@@ -16,7 +16,11 @@ Este repositorio contiene el flujo de trabajo reproducible para comparar datos s
 
 ## ⚙️ Instrucciones de Reproducibilidad
 
-Para auditar o reproducir los resultados de este proyecto, sigue estos pasos:
+### Requisitos Previos
+* Software de hojas de cálculo (Microsoft Excel recomendado para garantizar la compatibilidad de las fórmulas).
+* Entorno de compilación LaTeX (se recomienda Overleaf, o una instalación local con TeXstudio/VSCode).
+
+### Pasos para reproducir los resultados
 
 1. **Clonar el repositorio:**
    ```bash
