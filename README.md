@@ -22,6 +22,8 @@ Este repositorio contiene el flujo de trabajo reproducible para comparar datos s
 
 ### Pasos para reproducir los resultados
 
+Para auditar correctamente este trabajo, se recomienda seguir el flujo lógico de los datos:
+
 1. **Clonar el repositorio:**
    ```bash
    git clone [https://github.com/Almendraaaaa13/EvaluacionU1_OlivaresAlmendra.git](https://github.com/Almendraaaaa13/EvaluacionU1_OlivaresAlmendra.git)
